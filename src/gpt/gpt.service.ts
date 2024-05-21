@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { orthographyCheckUseCase, prosConsDiscusserStreamUseCase } from './use-cases';
-import { OrthographyDto, ProsConsDicusserDto } from './dtos';
+import { OrthographyDto, ProsConsDiscusserDto } from './dtos';
 import OpenAI from 'openai';
 import { prosConsDiscusserUseCase } from './use-cases/pros-cons-discusser.use-case';
 
@@ -15,19 +15,19 @@ export class GptService {
     // Solo va a llamar casos de uso
 
     // Caso de uso para verificar ortografía
-    async ortographyCheck(orthographyDto: OrthographyDto) {
+    async orthographyCheck(orthographyDto: OrthographyDto) {
         return await orthographyCheckUseCase( this.openai, {
             prompt: orthographyDto.prompt
         });
     }
 
     // Caso de uso para discutir pros y contras
-    async prosConsDicusser( { prompt }: ProsConsDicusserDto ) {
+    async prosConsDicusser( { prompt }: ProsConsDiscusserDto ) {
         return await prosConsDiscusserUseCase( this.openai, { prompt });
     }
 
     // Caso de uso para discutir pros y contras Stream
-    async prosConsDicusserStream( { prompt }: ProsConsDicusserDto ) {
+    async prosConsDicusserStream( { prompt }: ProsConsDiscusserDto ) {
         return await prosConsDiscusserStreamUseCase( this.openai, { prompt });
     }
 

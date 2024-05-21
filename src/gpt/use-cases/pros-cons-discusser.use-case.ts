@@ -24,10 +24,10 @@ export const prosConsDiscusserUseCase = async( openai: OpenAI, { prompt }: Optio
         ],
         model: "gpt-4o",
         temperature: 0.8,
-        max_tokens: 500,
+        max_tokens: 50,
     });
     
-    const jsonResp = completion.choices[0].message.content;
+    const jsonResp = completion.choices[0].message;
 
     // console.log(jsonResp);
     
