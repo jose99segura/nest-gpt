@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 
 import { GptService } from './gpt.service';
-import { OrthographyDto, ProsConsDiscusserDto } from './dtos';
+import { OrthographyDto, ProsConsDiscusserDto, TranslateDto } from './dtos';
 import { Response } from 'express';
 
 @Controller('gpt')
@@ -27,6 +27,7 @@ export class GptController {
     @Body() prosConsDicusserDto: ProsConsDiscusserDto,
     @Res() res: Response
   ) {
+
     const stream = await this.gptService.prosConsDicusserStream(prosConsDicusserDto);
 
     // Se envia la respuesta en formato stream, se envia el objeto completo
@@ -36,14 +37,19 @@ export class GptController {
     // Se recorre el stream y se envia la respuesta al cliente en formato stream
     for await( const chunk of stream ) {
       const piece = chunk.choices[0].delta.content || '';
-      console.log(piece);
-      
       res.write(piece);
     }
 
     // Se cierra la respuesta
     res.end();
 
+  }
+
+  @Post('translate')
+  translate(
+    @Body() translateDto: TranslateDto
+  ) {
+    return this.gptService.translate(translateDto);
   }
 
 }
