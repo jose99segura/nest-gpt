@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 
 import { GptService } from './gpt.service';
-import { OrthographyDto, ProsConsDiscusserDto, TranslateDto } from './dtos';
+import { OrthographyDto, ProsConsDiscusserDto, TesxtToAudioDto, TranslateDto } from './dtos';
 import { Response } from 'express';
 
 @Controller('gpt')
@@ -50,6 +50,13 @@ export class GptController {
     @Body() translateDto: TranslateDto
   ) {
     return this.gptService.translate(translateDto);
+  }
+
+  @Post('text-to-audio')
+  textToAudio(
+    @Body() textToAudioDto: TesxtToAudioDto
+  ) {
+    return this.gptService.textToAudio(textToAudioDto);
   }
 
 }
