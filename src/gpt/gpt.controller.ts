@@ -5,7 +5,7 @@ import { diskStorage } from 'multer';
 
 
 import { GptService } from './gpt.service';
-import { AudioToTextDto, ImageGenerationDto, OrthographyDto, ProsConsDiscusserDto, TesxtToAudioDto, TranslateDto } from './dtos';
+import { AudioToTextDto, ImageGenerationDto, ImageVariationDto, OrthographyDto, ProsConsDiscusserDto, TesxtToAudioDto, TranslateDto } from './dtos';
 
 
 @Controller('gpt')
@@ -130,6 +130,11 @@ export class GptController {
 
     res.status( HttpStatus.OK );
     res.sendFile(filePath);
+  }
+
+  @Post('image-variation')
+  async imageVariation(@Body() imageVariationDto: ImageVariationDto) {
+    return await this.gptService.geneateImageVariation(imageVariationDto);
   }
 
 
