@@ -1,6 +1,5 @@
 
 import * as fs from 'fs';
-import { url } from 'inspector';
 import OpenAI from "openai";
 import { downloadBase64ImageAsPng, downloadImageAsPng } from 'src/helpers';
 
@@ -14,8 +13,8 @@ interface Options {
 
 export const imageGenerationUseCase = async( openai: OpenAI, options: Options ) => {
 
-    const { prompt, originalImage, maskImage } = options;
-
+    const { prompt, maskImage, originalImage }  = options;
+    
     if( !originalImage || !maskImage ) {
         const resp = await openai.images.generate({
             prompt: prompt,
