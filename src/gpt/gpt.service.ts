@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { Injectable, NotFoundException } from '@nestjs/common';
 import OpenAI from 'openai';
 import { AudioToTextDto, ImageGenerationDto, ImageVariationDto, OrthographyDto, ProsConsDiscusserDto, TesxtToAudioDto, TranslateDto } from './dtos';
-import { orthographyCheckUseCase, prosConsDiscusserUseCase, prosConsDiscusserStreamUseCase, translateUseCase, textToAudioUseCase, audioToTextUseCase, imageGenerationUseCase, imageVariationUseCase } from './use-cases';
+import { orthographyCheckUseCase, prosConsDiscusserUseCase, prosConsDiscusserStreamUseCase, translateUseCase, textToAudioUseCase, audioToTextUseCase, imageGenerationUseCase, imageVariationUseCase, imageToTextUseCase } from './use-cases';
 
 
 
@@ -69,7 +69,11 @@ export class GptService {
 
     async geneateImageVariation( { baseImage }: ImageVariationDto ) {
         return imageVariationUseCase( this.openai, { baseImage } );
-      }
+    }
+
+    async imageToText(imageFile: Express.Multer.File, prompt: string) {
+        return await imageToTextUseCase(this.openai, { imageFile, prompt });
+    }
 
 
 }
